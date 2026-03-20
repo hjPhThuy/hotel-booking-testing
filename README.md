@@ -27,7 +27,7 @@ The testing covers multiple modules including authentication, booking, hotels, r
 ##  Project Structure
 
 ```
-.
+├── Test-Scenarios/
 ├── Test-Cases/
 ├── Test-Plan/
 ├── bug-reports/
