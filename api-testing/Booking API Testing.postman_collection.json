@@ -1,0 +1,1190 @@
+{
+  "info": {
+    "_postman_id": "d0820a48-3c90-4dc7-907a-e356ba310acb",
+    "name": "Booking API Testing",
+    "description": "API testing for Booking System project including Auth, Booking, and Room modulesEndFragment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46500231",
+    "_collection_link": "https://go.postman.co/collection/46500231-d0820a48-3c90-4dc7-907a-e356ba310acb?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register - Vaild",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let res = pm.response.json();\r",
+                  "pm.environment.set(\"token\", res.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"Test User\",\r\n  \"email\": \"test1@gmail.com\",\r\n  \"password\": \"123456\"\r\n}\r\n ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Valid",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Login success\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "let res = pm.response.json();\r",
+                  "pm.environment.set(\"token\", res.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"test1@gmail.com\",\r\n  \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Info User",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register - Duplicate email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"Test Users\",\r\n  \"email\": \"test1@gmail.com\",\r\n  \"password\": \"1234567\"\r\n}\r\n ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Wrong password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"Test User\",\r\n  \"email\": \"test1@gmail.com\",\r\n  \"password\": \"1234567\"\r\n}\r\n ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "Booking - Vaild",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"room\": \"693cd02b489bd2b34e5ccfaa\",\r\n  \"checkInDate\": \"2027-04-27\",\r\n  \"checkOutDate\": \"2027-04-28\",\r\n  \"guests\": \"2\",\r\n  \"name\": \"Test User\",\r\n  \"email\": \"test@gmail.com\",\r\n  \"paymentMethod\": \"cash\",\r\n  \"phone\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bookings/book",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "book"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Booking - Past Date",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"room\": \"693cd02b489bd2b34e5ccfaa\",\r\n  \"checkInDate\": \"2024-04-10\",\r\n  \"checkOutDate\": \"2024-04-11\",\r\n  \"guests\": \"2\",\r\n  \"name\": \"Test User\",\r\n  \"email\": \"test@gmail.com\",\r\n  \"paymentMethod\": \"cash\",\r\n  \"phone\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bookings/book",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "book"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/rooms/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Booking - Missing mail",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"room\": \"693cd02b489bd2b34e5ccfaa\",\r\n  \"checkInDate\": \"2026-05-10\",\r\n  \"checkOutDate\": \"2026-05-11\",\r\n  \"guests\": \"2\",\r\n  \"name\": \"Test User\",\r\n  \"email\": \"\",\r\n  \"paymentMethod\": \"cash\",\r\n  \"phone\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bookings/book",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "book"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Booking - guest exceed",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"room\": \"693cd02b489bd2b34e5ccfaa\",\r\n  \"checkInDate\": \"2026-07-10\",\r\n  \"checkOutDate\": \"2026-07-11\",\r\n  \"guests\": \"-1\",\r\n  \"name\": \"Test User\",\r\n  \"email\": \"test1@gmail.com\",\r\n  \"paymentMethod\": \"cash\",\r\n  \"phone\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bookings/book",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "book"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rooms",
+      "item": [
+        {
+          "name": "Rooms - Get All - Valid (Public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/rooms/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rooms - Get Owner - Valid",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/rooms/owner",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                "owner"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rooms - Create - Valid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "roomType",
+                  "value": "Phòng đôi",
+                  "type": "text",
+                  "uuid": "35496334-f586-441e-90a8-33323785d397"
+                },
+                {
+                  "key": "pricePerNight",
+                  "value": "887000",
+                  "type": "text",
+                  "uuid": "784d8811-d2f9-402c-99be-43829e06e08b"
+                },
+                {
+                  "key": "description",
+                  "value": "test",
+                  "type": "text",
+                  "uuid": "ef11da5d-ea27-4625-bc6f-aea712e43260"
+                },
+                {
+                  "key": "hotelName",
+                  "value": "The Signature Hotel Saigon",
+                  "type": "text",
+                  "uuid": "69e51c4e-3191-4e62-9a20-11a5cccc6e44"
+                },
+                {
+                  "key": "hotelContact",
+                  "value": "0951544545",
+                  "type": "text",
+                  "uuid": "2bc73d1d-7682-46d3-a012-22c922c2e80f"
+                },
+                {
+                  "key": "hotelAddress",
+                  "value": "39 Cách Mạng Tháng 8, Quận 1",
+                  "type": "text",
+                  "uuid": "cfa8efc0-c9c5-42ec-8ea0-727b1b5bec5d"
+                },
+                {
+                  "key": "hotelCity",
+                  "value": "Hồ Chí Minh",
+                  "type": "text",
+                  "uuid": "acee18b0-0b03-4928-9b36-0887d77ffd60"
+                },
+                {
+                  "key": "amenities",
+                  "value": "[\"Wifi\",\"Ban công\"]",
+                  "type": "text",
+                  "uuid": "36c04959-368a-4c76-8c6d-89c17d6bd515"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "16ae971a-e56b-4f9b-9b77-898a63391c1c",
+                  "src": "/C:/Users/ADMIN/Downloads/481814971.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/rooms/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rooms - Create - Negative Price",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "roomType",
+                  "value": "Phòng đơn",
+                  "type": "text",
+                  "uuid": "35496334-f586-441e-90a8-33323785d397"
+                },
+                {
+                  "key": "pricePerNight",
+                  "value": "-11111",
+                  "type": "text",
+                  "uuid": "784d8811-d2f9-402c-99be-43829e06e08b"
+                },
+                {
+                  "key": "description",
+                  "value": "test",
+                  "type": "text",
+                  "uuid": "ef11da5d-ea27-4625-bc6f-aea712e43260"
+                },
+                {
+                  "key": "hotelName",
+                  "value": "The Signature Hotel Saigon",
+                  "type": "text",
+                  "uuid": "69e51c4e-3191-4e62-9a20-11a5cccc6e44"
+                },
+                {
+                  "key": "hotelContact",
+                  "value": "0951544545",
+                  "type": "text",
+                  "uuid": "2bc73d1d-7682-46d3-a012-22c922c2e80f"
+                },
+                {
+                  "key": "hotelAddress",
+                  "value": "39 Cách Mạng Tháng 8, Quận 1",
+                  "type": "text",
+                  "uuid": "cfa8efc0-c9c5-42ec-8ea0-727b1b5bec5d"
+                },
+                {
+                  "key": "hotelCity",
+                  "value": "Hồ Chí Minh",
+                  "type": "text",
+                  "uuid": "acee18b0-0b03-4928-9b36-0887d77ffd60"
+                },
+                {
+                  "key": "amenities",
+                  "value": "[\"Wifi\",\"Ban công\"]",
+                  "type": "text",
+                  "uuid": "36c04959-368a-4c76-8c6d-89c17d6bd515"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "16ae971a-e56b-4f9b-9b77-898a63391c1c",
+                  "src": "/C:/Users/ADMIN/Downloads/481814971.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/rooms/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rooms - Create - Missing hotelname",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "roomType",
+                  "value": "Phòng đơn",
+                  "type": "text",
+                  "uuid": "35496334-f586-441e-90a8-33323785d397"
+                },
+                {
+                  "key": "pricePerNight",
+                  "value": "2344000",
+                  "type": "text",
+                  "uuid": "784d8811-d2f9-402c-99be-43829e06e08b"
+                },
+                {
+                  "key": "description",
+                  "value": "test",
+                  "type": "text",
+                  "uuid": "ef11da5d-ea27-4625-bc6f-aea712e43260"
+                },
+                {
+                  "key": "hotelName",
+                  "value": "",
+                  "type": "text",
+                  "uuid": "69e51c4e-3191-4e62-9a20-11a5cccc6e44"
+                },
+                {
+                  "key": "hotelContact",
+                  "value": "0951544545",
+                  "type": "text",
+                  "uuid": "2bc73d1d-7682-46d3-a012-22c922c2e80f"
+                },
+                {
+                  "key": "hotelAddress",
+                  "value": "39 Cách Mạng Tháng 8, Quận 1",
+                  "type": "text",
+                  "uuid": "cfa8efc0-c9c5-42ec-8ea0-727b1b5bec5d"
+                },
+                {
+                  "key": "hotelCity",
+                  "value": "Hồ Chí Minh",
+                  "type": "text",
+                  "uuid": "acee18b0-0b03-4928-9b36-0887d77ffd60"
+                },
+                {
+                  "key": "amenities",
+                  "value": "[\"Wifi\",\"Ban công\"]",
+                  "type": "text",
+                  "uuid": "36c04959-368a-4c76-8c6d-89c17d6bd515"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "16ae971a-e56b-4f9b-9b77-898a63391c1c",
+                  "src": "/C:/Users/ADMIN/Downloads/481814971.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/rooms/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rooms - Create - Missing images",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "roomType",
+                  "value": "Phòng đơn",
+                  "type": "text",
+                  "uuid": "35496334-f586-441e-90a8-33323785d397"
+                },
+                {
+                  "key": "pricePerNight",
+                  "value": "1000000",
+                  "type": "text",
+                  "uuid": "784d8811-d2f9-402c-99be-43829e06e08b"
+                },
+                {
+                  "key": "description",
+                  "value": "test",
+                  "type": "text",
+                  "uuid": "ef11da5d-ea27-4625-bc6f-aea712e43260"
+                },
+                {
+                  "key": "hotelName",
+                  "value": "The Signature Hotel Saigon",
+                  "type": "text",
+                  "uuid": "69e51c4e-3191-4e62-9a20-11a5cccc6e44"
+                },
+                {
+                  "key": "hotelContact",
+                  "value": "0951544545",
+                  "type": "text",
+                  "uuid": "2bc73d1d-7682-46d3-a012-22c922c2e80f"
+                },
+                {
+                  "key": "hotelAddress",
+                  "value": "39 Cách Mạng Tháng 8, Quận 1",
+                  "type": "text",
+                  "uuid": "cfa8efc0-c9c5-42ec-8ea0-727b1b5bec5d"
+                },
+                {
+                  "key": "hotelCity",
+                  "value": "Hồ Chí Minh",
+                  "type": "text",
+                  "uuid": "acee18b0-0b03-4928-9b36-0887d77ffd60"
+                },
+                {
+                  "key": "amenities",
+                  "value": "[\"Wifi\",\"Ban công\"]",
+                  "type": "text",
+                  "uuid": "36c04959-368a-4c76-8c6d-89c17d6bd515"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "16ae971a-e56b-4f9b-9b77-898a63391c1c",
+                  "value": null
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/rooms/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Users - Get Profile - Valid",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Users - Get Profile - No token",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User - Update Profile - Missing Field",
+          "protocolProfileBehavior": {
+            "disabledSystemHeaders": {}
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"\",\r\n  \"phone\": \"0901234567\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Users - Update Profile - Phone invalid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"Test Updated\",\r\n  \"phone\": \"abcxyz\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Hotels",
+      "item": [
+        {
+          "name": "Hotels - Get Owner - Valid",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Hotels - Get Owner - No Token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/hotels/owner",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "hotels",
+                "owner"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Hotels - Create - Valid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Test Hotel QA\",\r\n  \"address\": \"123 Nguyen Trai, HCM\",\r\n  \"contact\": \"0901234567\",\r\n  \"city\": \"Ho Chi Minh\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/hotels/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "hotels",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Hotels - Create - Missing Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"\",\r\n  \"address\": \"123 Nguyen Trai, HCM\",\r\n  \"contact\": \"0901234567\",\r\n  \"city\": \"Ho Chi Minh\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/hotels/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "hotels",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Hotels - Create - Invalid Contact",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Hotel Test\",\r\n  \"address\": \"123 Nguyen Trai\",\r\n  \"contact\": \"abcxyz\",\r\n  \"city\": \"HCM\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/hotels/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "hotels",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Hotels - Create - No Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/hotels/owner",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "hotels",
+                "owner"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Reviews - Add - Valid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"bookingId\": \"69bb835758234b980a2273a7\",\r\n  \"rating\": 3,\r\n  \"comment\": \"Tạm được\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/reviews/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "reviews",
+                "add"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bookings/user",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reviews - Add - Missing Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"bookingId\": \"69bb830d58234b980a22739f\",\r\n  \"rating\": 3,\r\n  \"comment\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/reviews/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "reviews",
+                "add"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reviews - Add - Rating Invalid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\": \"69ba9bb74aaea0cc2568948e\",\r\n  \"rating\": 6,\r\n  \"comment\": \"Tạm được\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/reviews/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "reviews",
+                "add"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
