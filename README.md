@@ -43,12 +43,12 @@ The testing covers multiple modules including authentication, booking, hotels, r
 
 ### Modules Tested
 
-* 🔑 Authentication
-* 👤 Users
-* 🏨 Hotels
-* 🛏️ Rooms
-* 📅 Bookings
-* ⭐ Reviews
+* Authentication
+* Users
+* Hotels
+* Rooms
+* Bookings
+* Reviews
 
 ---
 
